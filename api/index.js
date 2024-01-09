@@ -2,6 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv"
 
+import authRouter from "./routes/auth.route.js"
+
 dotenv.config();
 
 mongoose.connect(process.env.MONGO).then(()=>{
@@ -12,8 +14,23 @@ mongoose.connect(process.env.MONGO).then(()=>{
 
 
 
-
 const app=express();
+app.use(express.json());    // to allow json as the inout of the server
+
+app.use("/api/auth",authRouter);
+
+
+// middleware for error handling, keep it at last so if any error happens anywhere, middleware cathches it
+app.use((err,req,res,next)=>{
+    const statusCode=err.statusCode || 500;
+    const message=err.message || "Internal server error";
+    return res.status(statusCode).json({
+        success: false,
+        statusCode,
+        message
+    })
+})
+
 
 app.listen(3000,()=>{
     console.log("Server is running on port 3000")
