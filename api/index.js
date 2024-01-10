@@ -17,7 +17,8 @@ mongoose.connect(process.env.MONGO).then(()=>{
 const app=express();
 app.use(express.json());    // to allow json as the inout of the server
 
-app.use("/api/auth",authRouter);
+app.use("/api/auth",authRouter);  //route for getting user's info
+                                // The /api/auth/signup endpoint is a specific route on the server that is designed to handle user signup functionality.
 
 
 // middleware for error handling, keep it at last so if any error happens anywhere, middleware cathches it
