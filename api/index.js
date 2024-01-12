@@ -1,7 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv"
+import cookieParser from "cookie-parser";
 
+import userRouter from "./routes/user.route.js"
 import authRouter from "./routes/auth.route.js"
 
 dotenv.config();
@@ -16,6 +18,8 @@ mongoose.connect(process.env.MONGO).then(()=>{
 
 const app=express();
 app.use(express.json());    // to allow json as the inout of the server
+
+app.use(cookieParser());
 
 app.use("/api/auth",authRouter);  //route for getting user's info
                                 // The /api/auth/signup endpoint is a specific route on the server that is designed to handle user signup functionality.
@@ -36,3 +40,6 @@ app.use((err,req,res,next)=>{
 app.listen(3000,()=>{
     console.log("Server is running on port 3000")
 })
+
+
+app.use('/api/user', userRouter);
