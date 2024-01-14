@@ -36,7 +36,7 @@ export default function CreateListing() {
   
   const handleImageSubmit = (e) => {
 
-    if(files.length==0) return setImageUploadError("Upload atleast one image");
+    if(files.length==0) return setImageUploadError("Select atleast one image");
 
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true);
