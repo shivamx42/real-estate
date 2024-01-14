@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 
 import userRouter from "./routes/user.route.js"
 import authRouter from "./routes/auth.route.js"
+import listingRouter from "./routes/listing.route.js"
 
 dotenv.config();
 
@@ -26,6 +27,10 @@ app.use("/api/auth",authRouter);  //route for getting user's info
 
 
 // middleware for error handling, keep it at last so if any error happens anywhere, middleware cathches it
+
+app.use('/api/user', userRouter);
+app.use('/api/listing', listingRouter);
+
 app.use((err,req,res,next)=>{
     const statusCode=err.statusCode || 500;
     const message=err.message || "Internal server error";
@@ -42,4 +47,3 @@ app.listen(3000,()=>{
 })
 
 
-app.use('/api/user', userRouter);
